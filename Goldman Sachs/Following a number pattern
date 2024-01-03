@@ -1,1 +1,36 @@
+class Solution: 
+	def printMinNumberForPattern(ob,seq): 
+		# result stores the output string 
+		result = [] 
 
+		# create an empty stack of integers 
+		stk = [] 
+
+		# run n+1 times where n is the length of the input sequence 
+		for i in range(len(seq) + 1): 
+			# push number i+1 into the stack 
+			stk.append(i + 1) 
+
+			# if all characters of the input sequence are 
+			# processed or the current character is 'I' (increasing) 
+			if i == len(seq) or seq[i] == 'I': 
+				# run until the stack is empty 
+				while stk: 
+					# remove the top element from the stack and 
+					# add it to the solution 
+					result.append(str(stk.pop())) 
+
+		return ''.join(result) 
+
+#{ 
+ # Driver Code Starts
+#Initial Template for Python 3
+if __name__ == '__main__': 
+    t = int (input ())
+    for _ in range (t):
+        
+        S=str(input())
+
+        ob = Solution()
+        print(ob.printMinNumberForPattern(S))
+# } Driver Code Ends
