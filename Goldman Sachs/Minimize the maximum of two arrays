@@ -1,1 +1,32 @@
+from math import gcd
+from bisect import bisect_left
 
+class Solution:
+    def minimizeSet(self, divisor1: int, divisor2: int, unique_cnt1: int, unique_cnt2: int) -> int:
+        # Auxiliary function to determine the lowest common multiple (LCM) of two numbers
+        def lcm(a, b):
+            return a * b // gcd(a, b)
+
+        # Define the condition function that will be used with binary search
+        def condition(x: int) -> bool:
+            # Calculate the number of integers not divisible by divisor1 up to x
+            nondiv_cnt1 = x // divisor1 * (divisor1 - 1) + x % divisor1
+            # Calculate the number of integers not divisible by divisor2 up to x
+            nondiv_cnt2 = x // divisor2 * (divisor2 - 1) + x % divisor2
+            # Calculate the number of integers not divisible by the LCM of divisor1 and divisor2 up to x
+            nondiv_cnt_total = x // lcm_value * (lcm_value - 1) + x % lcm_value
+            # Check if the counted non-divisible integers meet or exceed the unique count requirements
+            return (
+                nondiv_cnt1 >= unique_cnt1 and
+                nondiv_cnt2 >= unique_cnt2 and
+                nondiv_cnt_total >= unique_cnt1 + unique_cnt2
+            )
+
+        # Calculate the least common multiple of the two divisors
+        lcm_value = lcm(divisor1, divisor2)
+      
+        # Perform binary search to find the smallest integer x for which condition(x) is True
+        # The search space is assumed to be up to 10^10
+        result = bisect_left(range(10**10), True, key=condition)
+      
+        return result
