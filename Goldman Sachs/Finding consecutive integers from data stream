@@ -1,1 +1,25 @@
+class DataStream:
 
+    def __init__(self, value: int, k: int):
+        self.v=value
+        self.k=k
+        self.q=deque()
+        self.d=defaultdict(int)
+
+    def consec(self, num: int) -> bool:
+        self.q.append(num)
+        self.d[num]+=1
+        
+        if len(self.q)<self.k:
+            return False
+        
+        else:
+            list_of_keys=list(self.d.keys())
+            ans= len(list_of_keys)==1 and list_of_keys[0]==self.v
+            
+            first=self.q.popleft()
+            self.d[first]-=1
+            if self.d[first]==0:
+                self.d.pop(first)
+            
+            return ans
