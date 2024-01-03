@@ -1,1 +1,29 @@
+def encode(s):
+    # Initialize an empty result string
+    result = ""
 
+    # Handle the case of an empty string
+    if not s:
+        return result
+
+    # Initialize variables to store the current character and its count
+    current_char = s[0]
+    count = 1
+
+    # Iterate through the characters of the string starting from the second character
+    for char in s[1:]:
+        if char == current_char:
+            # If the current character is the same as the previous one, increase the count
+            count += 1
+        else:
+            # If the current character is different, append the previous character and its count to the result
+            result += current_char + str(count)
+
+            # Update the current character and reset the count
+            current_char = char
+            count = 1
+
+    # Append the last character and its count to the result
+    result += current_char + str(count)
+
+    return result
